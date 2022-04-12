@@ -10,29 +10,35 @@ using Microsoft.AspNetCore.Http;
 
 namespace assignment_random_passcode.Controllers
 {
-    public class HomeController : Controller
+  public class HomeController : Controller
+  {
+    private readonly ILogger<HomeController> _logger;
+
+    public HomeController(ILogger<HomeController> logger)
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
-
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+      _logger = logger;
     }
+
+    public IActionResult Index()
+    {
+      HttpContext.Session.SetString("name", "Eric");
+      string myName = HttpContext.Session.GetString("name");
+      Console.WriteLine(myName);
+      // viewbag
+      ViewBag.SessionName = myName;
+      // viewmodel
+      return View("Index", myName);
+    }
+
+    public IActionResult Privacy()
+    {
+      return View();
+    }
+
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+    public IActionResult Error()
+    {
+      return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+    }
+  }
 }

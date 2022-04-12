@@ -1,10 +1,12 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+@Model string
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    
 
-    
+    <h2>From ViewBag @ViewBag.SessionName</h2>
+    <h2>From ViewModel @Model</h2>
+
 </div>
