@@ -22,6 +22,7 @@ namespace assignment_random_passcode.Controllers
     Random rand = new Random();
     string myName = "";
     string newString = "";
+    int temp = 0;
     public IActionResult Index()
     {
       if (HttpContext.Session.GetString("name") == null)
@@ -36,7 +37,8 @@ namespace assignment_random_passcode.Controllers
         newString = "";
         for (int i = 0; i < 14; i++)
         {
-          newString += "X";
+          temp = (rand.Next(65, 101) % 91);
+          newString += Char.ConvertFromUtf32(temp < 65 ? temp+48 : temp);
           Console.Write(newString);
         }
         HttpContext.Session.SetString("name", newString);
