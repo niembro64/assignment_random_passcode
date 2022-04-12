@@ -19,14 +19,31 @@ namespace assignment_random_passcode.Controllers
       _logger = logger;
     }
 
+    Random rand = new Random();
+    string myName = "";
+    string newString = "";
     public IActionResult Index()
     {
-      HttpContext.Session.SetString("name", "Eric");
-      string myName = HttpContext.Session.GetString("name");
-      Console.WriteLine(myName);
-      // viewbag
+      if (HttpContext.Session.GetString("name") == null)
+      {
+        Console.WriteLine("First Time Through");
+        newString = "";
+        HttpContext.Session.SetString("name", "Eric");
+      }
+      else
+      {
+        Console.WriteLine("Other Time Through");
+        newString = "";
+        for (int i = 0; i < 14; i++)
+        {
+          newString += "X";
+          Console.Write(newString);
+        }
+        HttpContext.Session.SetString("name", newString);
+      }
+      myName = HttpContext.Session.GetString("name");
       ViewBag.SessionName = myName;
-      // viewmodel
+
       return View("Index", myName);
     }
 
